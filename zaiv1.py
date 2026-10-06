@@ -1,9 +1,7 @@
 def read_template():
-
     print(os.curdir)
 
     with open("latex/template.tex", encoding="utf-8") as template:
-
         text = template.read()
 
     splitpos = text.find("%--------------")
@@ -19,16 +17,10 @@ def read_template():
     return templateheader, template, templatefooter
 
 
-
-
-
 def empty_template(kl2kv, teachers, template, year):
-
     ask_short_text = r"\INes"
 
     ask_long_text = r"\INe"
-
-
 
     ask_teacher = r"\Choice{" + ",\n".join(f"{name} ({kz})"
 
@@ -39,8 +31,6 @@ def empty_template(kl2kv, teachers, template, year):
                                        for klasse in kl2kv.keys()
 
                                        ) + "}"
-
-
 
     args = {
 
@@ -79,11 +69,7 @@ def empty_template(kl2kv, teachers, template, year):
     return myformat(template, args)
 
 
-
-
-
 def my_call(num, cmd):
-
     print(f"  start {cmd}  ({num})")
 
     call(cmd, stdin=DEVNULL, stdout=DEVNULL, shell=True,
@@ -92,13 +78,7 @@ def my_call(num, cmd):
 
     print(f"  finished {cmd} ({num})")
 
-
-
-
-
-
-
-    with  multiprocessing.Pool(multiprocessing.cpu_count()//2 - 1) as pool:
+    with  multiprocessing.Pool(multiprocessing.cpu_count() // 2 - 1) as pool:
 
         try:
 
@@ -119,22 +99,17 @@ def my_call(num, cmd):
                         print(TERMINESTART, file=f)
 
                         for data in terminliste[tex_file]:
-
                             print(" & ".join(data) + r"\\ \hline", file=f)
 
                         print(TERMINEEND, file=f)
 
                     print(templatefooter, file=f)
 
-                pool.apply_async(my_call, args=(f"{num}/{len(all_files)}", f"""latexmk -pdf "{tex_file}" """, ))
-
-
+                pool.apply_async(my_call, args=(f"{num}/{len(all_files)}", f"""latexmk -pdf "{tex_file}" """,))
 
             pool.close()
 
             pool.join()
-
-
 
             print("zip")
 
